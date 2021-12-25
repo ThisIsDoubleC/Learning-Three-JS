@@ -1,0 +1,9 @@
+HTML:
+Javascript:
+Scene: The space
+Camera: Our view into that space
+Renderer: Showing our view of that space
+Geometry: Creates a geometric shape using vertices (point) and faces (fill)
+Material: Create a material which has perceptible properties
+Mesh: Mesh takes a geometry and applies a material onto it
+
