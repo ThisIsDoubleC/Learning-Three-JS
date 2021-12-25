@@ -16,6 +16,14 @@ scene.add( cube ); //We can insert this mesh into our scene and move it around. 
 
 camera.position.z = 5; //move camera position away from default position of (0,0,0)
 
+// Controls
+
+const controls = new OrbitControls( camera, renderer.domElement );
+controls.minDistance = 1;
+controls.maxDistance = 8;
+controls.target.set( 0, 1, 0 );
+controls.update();
+
 //Animate render to draw scene every time the screen is refreshed (often 60 frames per second)
 function animate() {
 	requestAnimationFrame( animate ); //requestAnimationFrame (unlike javascript setInterval) pauses when user navigate to another tab saving battery and processing power
