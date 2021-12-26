@@ -65,12 +65,13 @@ function generateGeometry (){
 const geometryGUI = gui.addFolder('Geometry Control');
     //Variables used in GUI
         dataGuiVariables = {
-            width: 1, height: 1,positionX: 0,positionY:0
+            width: 1, height: 1,positionX: 0,positionY:0,rotationSpeed:0.01
         }
     geometryGUI.add(dataGuiVariables, 'width', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry) 
     geometryGUI.add(dataGuiVariables, 'height', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
     geometryGUI.add(dataGuiVariables, 'positionX', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
     geometryGUI.add(dataGuiVariables, 'positionY', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
+    geometryGUI.add(dataGuiVariables, 'rotationSpeed', -0.1,0.1 /*Min, Max, (optional) Step size*/)
 
 
 
@@ -83,8 +84,8 @@ const geometryGUI = gui.addFolder('Geometry Control');
 animate();
 
 function myTestAnimation(){
-    cube.rotation.x += 0.01;
-    cube.rotation.y += 0.01;
+    cube.rotation.x += dataGuiVariables.rotationSpeed;
+    cube.rotation.y += dataGuiVariables.rotationSpeed;
 }
 
 
