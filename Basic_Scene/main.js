@@ -10,10 +10,27 @@
 //create geometry to view
     const geometry = new THREE.BoxGeometry(); //creates a cube by describing the vertices (points) and faces (fill) of the cube geometry
     const material = new THREE.MeshBasicMaterial( { color: 'rgb(250,250,200)' } ); //add material with only the property of color using Hex codes
-    const cube = new THREE.Mesh( geometry, material ); //Mesh takes geometry and applies a material onto it. 
+    const lightReactiveMaterial = new THREE.MeshPhongMaterial({shininess: 100});
+    const cube = new THREE.Mesh( geometry, lightReactiveMaterial ); //Mesh takes geometry and applies a material onto it. 
     scene.add( cube ); //We can insert this mesh into our scene and move it around. By default it is added to coordinates (0,0,0)
 
     camera.position.z = 5; //move camera position away from default position of (0,0,0)
+
+//Add lights
+    const lights = [];
+    lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
+     lights[ 2 ] = new THREE.PointLight( 0xffffff, 0.5, 0 );
+    lights[ 1 ] = new THREE.PointLight( 0xffffff, 0.9, 0 );
+    //ambient lighting
+    lights.push(new THREE.AmbientLight(('rgb(10,15,90)'),0.5)) //color, intensity
+
+    lights[ 0 ].position.set( 0, 200, 0 );
+     lights[ 1 ].position.set( 100, 200, 100 );
+    lights[ 2 ].position.set( - 100, - 200, - 100 );
+ 
+    for (let light of lights){
+        scene.add(light)
+    }
 
 // Controls
 
