@@ -1,3 +1,5 @@
+const gui = new GUI();
+gui.add( document, 'title' );
 //create scene, camera, renderer
     const scene = new THREE.Scene(); //space
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ); //view into that space
