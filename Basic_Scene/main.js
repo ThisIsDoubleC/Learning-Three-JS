@@ -34,18 +34,26 @@ function updateGeometries(mesh, updatedGeometry){
     mesh.geometry = updatedGeometry
 }
 
+function updatePosition(mesh,positionX,positionY){
+    mesh.position.set(positionX,positionY,0) //Inherited from Object3D https://threejs.org/docs/?q=mesh#api/en/core/Object3D.position
+}
+
 function generateGeometry (){
     updateGeometries(cube,new THREE.BoxGeometry(
         dataGuiVariables.width, dataGuiVariables.height
     )); 
+    updatePosition(cube,dataGuiVariables.positionX,dataGuiVariables.positionY)
 }
 
 const geometryGUI = gui.addFolder('Geometry Control');
     //Variables used in GUI
         dataGuiVariables = {
-            width: 10, height: 1,positionX: 0,positionY:0
+            width: 1, height: 1,positionX: 0,positionY:0
         }
     geometryGUI.add(dataGuiVariables, 'width', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry) 
+    geometryGUI.add(dataGuiVariables, 'height', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
+    geometryGUI.add(dataGuiVariables, 'positionX', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
+    geometryGUI.add(dataGuiVariables, 'positionY', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
 
 
 
