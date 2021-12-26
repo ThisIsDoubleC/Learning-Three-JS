@@ -1,5 +1,4 @@
-const gui = new GUI();
-gui.add( document, 'title' );
+
 //create scene, camera, renderer
     const scene = new THREE.Scene(); //space
     const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 ); //view into that space
@@ -10,7 +9,7 @@ gui.add( document, 'title' );
 
 //create geometry to view
     const geometry = new THREE.BoxGeometry(); //creates a cube by describing the vertices (points) and faces (fill) of the cube geometry
-    const material = new THREE.MeshBasicMaterial( { color: 0x00ff00 } ); //add material with only the property of color using Hex codes
+    const material = new THREE.MeshBasicMaterial( { color: 'rgb(250,250,200)' } ); //add material with only the property of color using Hex codes
     const cube = new THREE.Mesh( geometry, material ); //Mesh takes geometry and applies a material onto it. 
     scene.add( cube ); //We can insert this mesh into our scene and move it around. By default it is added to coordinates (0,0,0)
 
@@ -24,6 +23,32 @@ gui.add( document, 'title' );
     controls.target.set( 0, 1, 0 );
     controls.update();
 
+//GUI
+const gui = new GUI();
+gui.add( document, 'title' ); //Control webpage title (https://lil-gui.georgealways.com/#Guide#Adding-Controllers)
+
+function updateGeometries(mesh, updatedGeometry){ 
+    //Based on function from view-source:https://threejs.org/docs/scenes/geometry-browser.html#BoxGeometry
+    mesh.geometry.dispose(); //uses properties of mesh from inherited from Object3D https://threejs.org/docs/?q=mesh#api/en/core/Object3D.children
+
+    mesh.geometry = updatedGeometry
+}
+
+function generateGeometry (){
+    updateGeometries(cube,new THREE.BoxGeometry(
+        dataGuiVariables.width, dataGuiVariables.height
+    )); 
+}
+
+const geometryGUI = gui.addFolder('Geometry Control');
+    //Variables used in GUI
+        dataGuiVariables = {
+            width: 10, height: 1,positionX: 0,positionY:0
+        }
+    geometryGUI.add(dataGuiVariables, 'width', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry) 
+
+
+
 //Animate render to draw scene every time the screen is refreshed (often 60 frames per second)
     function animate() {
         requestAnimationFrame( animate ); //requestAnimationFrame (unlike javascript setInterval) pauses when user navigate to another tab saving battery and processing power
@@ -36,3 +61,5 @@ function myTestAnimation(){
     cube.rotation.x += 0.01;
     cube.rotation.y += 0.01;
 }
+
+
