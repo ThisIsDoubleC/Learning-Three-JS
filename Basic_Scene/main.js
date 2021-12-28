@@ -70,37 +70,48 @@
     controls.update();
 
 //GUI
-const gui = new GUI();
-gui.add( document, 'title' ); //Control webpage title (https://lil-gui.georgealways.com/#Guide#Adding-Controllers)
+    const gui = new GUI();
+    gui.add( document, 'title' ); //Control webpage title (https://lil-gui.georgealways.com/#Guide#Adding-Controllers)
 
-function updateGeometries(mesh, updatedGeometry){ 
-    //Based on function from view-source:https://threejs.org/docs/scenes/geometry-browser.html#BoxGeometry
-    mesh.geometry.dispose(); //uses properties of mesh from inherited from Object3D https://threejs.org/docs/?q=mesh#api/en/core/Object3D.children
+    function updateGeometries(mesh, updatedGeometry){ 
+        //Based on function from view-source:https://threejs.org/docs/scenes/geometry-browser.html#BoxGeometry
+        mesh.geometry.dispose(); //uses properties of mesh from inherited from Object3D https://threejs.org/docs/?q=mesh#api/en/core/Object3D.children
 
-    mesh.geometry = updatedGeometry
-}
+        mesh.geometry = updatedGeometry
+    }
 
-function updatePosition(mesh,positionX,positionY){
-    mesh.position.set(positionX,positionY,0) //Inherited from Object3D https://threejs.org/docs/?q=mesh#api/en/core/Object3D.position
-}
+    function updatePosition(mesh,positionX,positionY){
+        mesh.position.set(positionX,positionY,0) //Inherited from Object3D https://threejs.org/docs/?q=mesh#api/en/core/Object3D.position
+    }
 
-function generateGeometry (){
-    updateGeometries(cube,new THREE.BoxGeometry(
-        dataGuiVariables.width, dataGuiVariables.height
-    )); 
-    updatePosition(cube,dataGuiVariables.positionX,dataGuiVariables.positionY)
-}
+    function generateGeometry (){
+        updateGeometries(cube,new THREE.BoxGeometry(
+            geometryGuiVariables.width, geometryGuiVariables.height
+        )); 
+        updatePosition(cube,geometryGuiVariables.positionX,geometryGuiVariables.positionY)
+    }
 
-const geometryGUI = gui.addFolder('Geometry Control');
-    //Variables used in GUI
-        dataGuiVariables = {
-            width: 1, height: 1,positionX: 0,positionY:0,rotationSpeed:0.01
-        }
-    geometryGUI.add(dataGuiVariables, 'width', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry) 
-    geometryGUI.add(dataGuiVariables, 'height', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
-    geometryGUI.add(dataGuiVariables, 'positionX', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
-    geometryGUI.add(dataGuiVariables, 'positionY', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
-    geometryGUI.add(dataGuiVariables, 'rotationSpeed', -0.1,0.1 /*Min, Max, (optional) Step size*/)
+    const geometryGUI = gui.addFolder('Geometry Control');
+        //Variables used in GUI
+            geometryGuiVariables = {
+                width: 1, height: 1,positionX: 0,positionY:0,rotationSpeed:0.01
+            }
+        geometryGUI.add(geometryGuiVariables, 'width', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry) 
+        geometryGUI.add(geometryGuiVariables, 'height', 1,25 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
+        geometryGUI.add(geometryGuiVariables, 'positionX', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
+        geometryGUI.add(geometryGuiVariables, 'positionY', -4,4 /*Min, Max, (optional) Step size*/).onChange(generateGeometry)
+        geometryGUI.add(geometryGuiVariables, 'rotationSpeed', -0.1,0.1 /*Min, Max, (optional) Step size*/)
+    
+    const materialGUI = gui.addFolder('Material Control');
+            //Variables used in GUI
+            materialGuiVariables = {
+                normalMap: "NormalMap.png"
+            }
+            function changeNormals(){
+                cube.material.normalMap = materialGuiVariables.normalMap
+                //cube.material.needsUpdate = true //Not needed in this case https://threejs.org/docs/index.html#manual/en/introduction/How-to-update-things
+            }
+            materialGUI.add(materialGuiVariables, 'normalMap',{CoolText:textureLoader.load("NormalMap.png"),RoughLook:textureLoader.load("PerlinNoiseNormalMap.png"),Pointy:textureLoader.load("RadialWhiteNormalMap.png")}).onChange(changeNormals)
 
 
 
@@ -113,8 +124,8 @@ const geometryGUI = gui.addFolder('Geometry Control');
 animate();
 
 function myTestAnimation(){
-    cube.rotation.x += dataGuiVariables.rotationSpeed;
-    cube.rotation.y += dataGuiVariables.rotationSpeed;
+    cube.rotation.x += geometryGuiVariables.rotationSpeed;
+    cube.rotation.y += geometryGuiVariables.rotationSpeed;
 }
 
 
