@@ -49,7 +49,7 @@
     const lights = [];
     lights[ 0 ] = new THREE.PointLight( 0xffffff, 1, 0 );
      lights[ 2 ] = new THREE.PointLight( 0xffffff, 0.5, 0 );
-    lights[ 1 ] = new THREE.PointLight( 0xffffff, 0.9, 0 );
+    lights[ 1 ] = new THREE.PointLight( 0xffffff, 0.9, 0 ); 
     //ambient lighting
     lights.push(new THREE.AmbientLight(('rgb(10,15,90)'),0.5)) //color, intensity
 
